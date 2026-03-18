@@ -1,0 +1,4 @@
+﻿/target/
+.vscode/
+**/*.ts.bk
+.log
