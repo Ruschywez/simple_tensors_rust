@@ -1,10 +1,10 @@
 
 use num_traits::Num;
 #[warn(unused_imports)]
-use std::ops::Add; // трейт сложение
+use std::ops::{Add, Mul, Div, Sub}; // трейт сложение
 use std::any::TypeId; // проверка типов
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 struct Tensor <T: Num>{
     values: Vec<T>, // 24 байт
     shapes: Vec<usize>, // 24 байт
@@ -22,10 +22,12 @@ impl<T: Num + Clone> Tensor<T> {
         let values: Vec<T> = vec![T::zero(); shapes.iter().product()];
         Self { values, shapes }
     }
-    // fn fill(shapes: Vec<usize>, value: T) -> Self {
-    //     let value: Vec<T> = vec!(value; shapes.iter().product());
+    #[warn(unused)]
+    fn fill(shapes: Vec<usize>, value: T) -> Self {
+        let values: Vec<T> = vec!(value; shapes.iter().product());
+        Self {values, shapes}
         
-    // }
+    }
     #[warn(unused)]
     fn is_same_types<L: 'static, U: 'static>(_: &Vec<L>, _:&Vec<U>) -> bool {
         if TypeId::of::<L>() == TypeId::of::<U>() {
@@ -44,10 +46,11 @@ impl<T: Num + Clone> Tensor<T> {
         self.shapes.clone()
     }
 }
+impl <T:Num + Copy> Copy for Tensor<T> {}
 impl<T: Num + Clone> Add for Tensor<T> {
     type Output = Tensor<T>; // Возвращаем сразу Тензор
 
-    fn add(self, other: Tensor<T>) -> Self::Output {
+    fn add(self, other: &Tensor<T>) -> Self::Output {
         assert_eq!(self.shapes, other.shapes, "Shapes must match!");
         
         let values = self.values.iter()
@@ -58,10 +61,32 @@ impl<T: Num + Clone> Add for Tensor<T> {
         Tensor { values, shapes: self.shapes }
     }
 }
+impl<T: Num + Clone> Sub for Tensor<T> {
+    type Output = Tensor<T>; // Возвращаем сразу Тензор
+
+    fn sub(self, other: Tensor<T>) -> Self::Output {
+        assert_eq!(self.shapes, other.shapes, "Shapes must match!");
+        
+        let values = self.values.iter()
+            .zip(other.values.iter())
+            .map(|(a, b)| a.clone() - b.clone())
+            .collect();
+
+        Tensor { values, shapes: self.shapes }
+    }
+}
 
 fn main() {
-    let mut vec1: Tensor<i32> = Tensor::zero(vec!(1, 2, 3));
-    let vec2: Tensor<i32> = Tensor::zero(vec!(1, 2, 3));
-    vec1 = vec1 + vec2;
-    println!("{:?}", vec1);
+
+    let shap1 = vec!(2, 2, 2 as usize);
+    let shap2 = vec!(2, 2, 2 as usize);
+
+    let mut t1 = Tensor::fill(shap1, 1 as i32);
+    let t2 = Tensor::fill(shap2, 2 as i32);
+
+    t1 = t1 + t2;
+    println!("{:?}", t1);
+    t1 = t1 - t2;
+    println!("{:?}", t1);
+    
 }
