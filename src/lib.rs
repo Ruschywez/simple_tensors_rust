@@ -1,6 +1,8 @@
 pub mod core;
 pub mod ops;
-pub mod manupulation;
+pub mod manipulation;
+pub mod creation;
 
 pub use core::tensor::Tensor;
-pub use manupulation::*;
+pub use manipulation::*;
+pub use creation::*;

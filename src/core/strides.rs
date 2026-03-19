@@ -1,4 +1,4 @@
-use crate::tensor::Tensor;
+use crate::Tensor;
 
 pub fn compute_strides(shape: &[usize]) -> Vec<usize> {
     let mut strides = vec![1; shape.len()];

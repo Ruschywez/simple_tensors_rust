@@ -1,10 +1,10 @@
 use std::ops::Add;
-use crate::tensor::Tensor;
+use crate::Tensor;
 use num_traits::Num;
 
 /*
     Модуль сложения.
-    На момент 19.03.2026 здесь реализованы только 4 трейта:
+    На момент 19.03.2026 здесь реализованы только 4 trait:
     t  + t
     t  + &t
     &t + t

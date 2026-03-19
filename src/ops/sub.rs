@@ -1,5 +1,5 @@
 use std::ops::Sub;
-use crate::tensor::Tensor;
+use crate::Tensor;
 use num_traits::Num;
 
 /*
@@ -13,12 +13,12 @@ use num_traits::Num;
 
 // Разница
 impl<T: Num + Clone> Sub for Tensor<T> {
-    type Output = Tensor<T>;  // Было TEnsor<T>
+    type Output = Tensor<T>;
     
     fn sub(self, other: Tensor<T>) -> Self::Output {
         assert_eq!(self.shapes, other.shapes, "Shapes must match!");
         let values = self.values.iter()
-            .zip(other.values.iter())  // Было valies
+            .zip(other.values.iter())
             .map(|(a, b)| a.clone() - b.clone())
             .collect();
         Tensor { values, shapes: self.shapes, strides: self.strides }
@@ -33,7 +33,7 @@ impl<T: Num + Clone> Sub for &Tensor<T> {
         let values = self.values.iter()
             .zip(other.values.iter())
             .map(|(a, b)| a.clone() - b.clone())
-            .collect();  // Было colect
+            .collect();
         Tensor { values, shapes: self.shapes.clone(), strides: self.strides.clone() }
     }
 }
@@ -55,7 +55,7 @@ impl<T: Num + Clone> Sub<Tensor<T>> for &Tensor<T> {
     type Output = Tensor<T>;
     
     fn sub(self, other: Tensor<T>) -> Self::Output {
-        assert_eq!(self.shapes, other.shapes, "Shapes must match");  // Было "nust"
+        assert_eq!(self.shapes, other.shapes, "Shapes must match");
         let values = self.values.iter()
             .zip(other.values.iter())
             .map(|(a, b)| a.clone() - b.clone())
