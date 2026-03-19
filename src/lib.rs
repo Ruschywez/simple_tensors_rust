@@ -1,3 +1,6 @@
-pub mod tensor;
+pub mod core;
 pub mod ops;
-pub use crate::tensor::Tensor;
+pub mod manupulation;
+
+pub use core::tensor::Tensor;
+pub use manupulation::*;
