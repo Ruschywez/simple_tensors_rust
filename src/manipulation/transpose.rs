@@ -12,6 +12,8 @@ impl<T: Num + Clone> Tensor<T> {
     pub fn transpose_physical_n_shapes(&mut self) {
         /*
             Пока самая моя нелюбимая и некрасивая функция!
+            логика простая, но кода много и я не уверен в
+            том, на сколько этот код быстр и эффективен
          */
         if self.shapes.len() <= 1 as usize {
             return;
@@ -36,7 +38,7 @@ impl<T: Num + Clone> Tensor<T> {
             }
             coords.reverse();
             let mut new_linear_idx: usize = 0;
-            for (j, (&coord, &stride)) in coords.iter().zip(&new_strides).enumerate() {
+            for (_j, (&coord, &stride)) in coords.iter().zip(&new_strides).enumerate() {
                 new_linear_idx += coord * stride;
             }
             index_map[old_linear_idx] = new_linear_idx;

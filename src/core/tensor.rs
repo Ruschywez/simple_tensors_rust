@@ -1,6 +1,5 @@
 use num_traits::Num;
 use std::any::TypeId;
-use crate::core::strides::compute_strides;
 // вот оно само величие его тензор
 
 #[derive(Debug, PartialEq)]
@@ -11,11 +10,6 @@ pub struct Tensor<T: Num> {
 }
 
 impl<T: Num + Clone> Tensor<T> {
-    pub fn zero(shapes: Vec<usize>) -> Self {
-        let values: Vec<T> = vec![T::zero(); shapes.iter().product()];
-        let strides: Vec<usize> = compute_strides(&shapes);
-        Self { values, shapes, strides }
-    }
     pub fn is_same_types<L: 'static, U: 'static>(_: &Vec<L>, _: &Vec<U>) -> bool {
         TypeId::of::<L>() == TypeId::of::<U>()
     }
