@@ -1,8 +1,8 @@
-use crate::Tensor;
+use crate::core::tensor::Tensor;
 use num_traits::Num;
 use crate::core::strides::compute_strides;
 
-impl<T: Num + Clone> Tensor<T> {
+impl<T: Num + Clone + Copy> Tensor<T> {
     pub fn new(shapes: Vec<usize>) -> Self {
         let values: Vec<T> = Vec::with_capacity(shapes.iter().product());
         let strides: Vec<usize> = compute_strides(&shapes);
