@@ -1,5 +1,4 @@
 use num_traits::Num;
-use std::any::TypeId;
 // вот оно само величие его тензор
 
 #[derive(Debug, PartialEq)]
@@ -29,6 +28,12 @@ impl<T: Num + Clone + Copy> Tensor<T> {
             offset += dim_idm * self.strides[i];
         }
         &self.values[offset]
+    }
+    pub fn get_index(&self, coords: &[usize]) -> usize {
+        /*
+            Наконец-то удобный метод для нахождения индекса с учетом смещения!
+         */
+        coords.iter().zip(&self.strides).map(|(&c, &s)| c * s).sum()
     }
 }
 /*
@@ -68,9 +73,4 @@ impl<T: Num + Clone + Copy> Tensor<T> {
         std::any::type_name::<T>()
     }
 
-}
-#[warn(unused)]
-pub fn is_same_types<L: 'static, U: 'static>(_: &Vec<L>, _: &Vec<U>) -> bool {
-    // ф-ия 
-    TypeId::of::<L>() == TypeId::of::<U>()
 }
