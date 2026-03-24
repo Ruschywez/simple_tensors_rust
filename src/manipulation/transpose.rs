@@ -1,7 +1,7 @@
 use crate::Tensor;
 use num_traits::Num;
 
-impl<T: Num + Clone> Tensor<T> {
+impl<T: Num + Clone + Copy> Tensor<T> {
     pub fn transpose_lazy(&mut self){
         // ### Lazy Transpose Algorithm
         // ленивое транспонирование всего тензора.

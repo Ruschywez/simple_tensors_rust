@@ -1,5 +1,5 @@
 use std::ops::Add;
-use crate::Tensor;
+use crate::core::tensor::Tensor;
 use num_traits::Num;
 
 /*
@@ -13,7 +13,7 @@ use num_traits::Num;
 
 
 // СЛОЖЕНИЕ
-impl<T: Num + Clone> Add for Tensor<T> {
+impl<T: Num + Clone + Copy> Add for Tensor<T> {
     type Output = Tensor<T>;
     
     fn add(self, other: Tensor<T>) -> Self::Output {
@@ -26,7 +26,7 @@ impl<T: Num + Clone> Add for Tensor<T> {
     }
 }
 
-impl<T: Num + Clone> Add for &Tensor<T> {
+impl<T: Num + Clone + Copy> Add for &Tensor<T> {
     type Output = Tensor<T>;
     
     fn add(self, other: &Tensor<T>) -> Self::Output {
@@ -39,7 +39,7 @@ impl<T: Num + Clone> Add for &Tensor<T> {
     }
 }
 
-impl<T: Num + Clone> Add<&Tensor<T>> for Tensor<T> {
+impl<T: Num + Clone + Copy> Add<&Tensor<T>> for Tensor<T> {
     type Output = Tensor<T>;
     
     fn add(self, other: &Tensor<T>) -> Self::Output {
@@ -52,7 +52,7 @@ impl<T: Num + Clone> Add<&Tensor<T>> for Tensor<T> {
     }
 }
 
-impl<T: Num + Clone> Add<Tensor<T>> for &Tensor<T> {
+impl<T: Num + Clone + Copy> Add<Tensor<T>> for &Tensor<T> {
     type Output = Tensor<T>;
     
     fn add(self, other: Tensor<T>) -> Self::Output {

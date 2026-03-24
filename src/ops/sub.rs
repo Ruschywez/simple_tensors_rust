@@ -1,10 +1,10 @@
 use std::ops::Sub;
-use crate::Tensor;
+use crate::core::tensor::Tensor;
 use num_traits::Num;
 
 /*
     Модуль разницы.
-    На момент 19.03.2026 здесь реализованы только 4 трейта:
+    На момент 19.03.2026 здесь реализованы только 4 trait:
     t  - t
     t  - &t
     &t - t
@@ -12,7 +12,7 @@ use num_traits::Num;
 */
 
 // Разница
-impl<T: Num + Clone> Sub for Tensor<T> {
+impl<T: Num + Clone + Copy> Sub for Tensor<T> {
     type Output = Tensor<T>;
     
     fn sub(self, other: Tensor<T>) -> Self::Output {
@@ -25,7 +25,7 @@ impl<T: Num + Clone> Sub for Tensor<T> {
     }
 }
 
-impl<T: Num + Clone> Sub for &Tensor<T> {
+impl<T: Num + Clone + Copy> Sub for &Tensor<T> {
     type Output = Tensor<T>;
     
     fn sub(self, other: &Tensor<T>) -> Self::Output {
@@ -38,7 +38,7 @@ impl<T: Num + Clone> Sub for &Tensor<T> {
     }
 }
 
-impl<T: Num + Clone> Sub<&Tensor<T>> for Tensor<T> {
+impl<T: Num + Clone + Copy> Sub<&Tensor<T>> for Tensor<T> {
     type Output = Tensor<T>;
     
     fn sub(self, other: &Tensor<T>) -> Self::Output {
@@ -51,7 +51,7 @@ impl<T: Num + Clone> Sub<&Tensor<T>> for Tensor<T> {
     }
 }
 
-impl<T: Num + Clone> Sub<Tensor<T>> for &Tensor<T> {
+impl<T: Num + Clone + Copy> Sub<Tensor<T>> for &Tensor<T> {
     type Output = Tensor<T>;
     
     fn sub(self, other: Tensor<T>) -> Self::Output {
